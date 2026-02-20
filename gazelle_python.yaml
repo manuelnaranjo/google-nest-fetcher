@@ -6,11 +6,21 @@
 ---
 manifest:
   modules_mapping:
+    Cryptodome: pycryptodomex
     certifi: certifi
     charset_normalizer: charset_normalizer
+    ghome_foyer_api: ghome_foyer_api
+    glocaltokens: glocaltokens
+    google.protobuf: protobuf
+    gpsoauth: gpsoauth
+    grpc: grpcio
     idna: idna
+    ifaddr: ifaddr
     requests: requests
+    simplejson: simplejson
+    typing_extensions: typing_extensions
     urllib3: urllib3
+    zeroconf: zeroconf
   pip_repository:
     name: pip
-integrity: e6a296d844368365c7a66334312948f2677365f48024e0e091bdf1599237b368
+integrity: 9476309925f45717b5b29b63997882f978784e0aae9d60ea900c741850f05d5b

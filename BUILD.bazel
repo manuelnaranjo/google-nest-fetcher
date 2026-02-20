@@ -4,6 +4,7 @@ load("@multitool//:tools.bzl", MULTITOOL_TOOLS = "TOOLS")
 load("@npm//:@google/gemini-cli/package_json.bzl", gemini_bin = "bin")
 load("@npm//:defs.bzl", "npm_link_all_packages")
 load("@pip//:requirements.bzl", "all_whl_requirements")
+load("@rules_multirun//:defs.bzl", "multirun")
 load("@rules_python//python/pip_install:requirements.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
@@ -51,8 +52,26 @@ buildifier(
 )
 
 gazelle(
-    name = "gazelle",
+    name = "_gazelle",
     gazelle = "@multitool//tools/gazelle",
+)
+
+multirun(
+    name = "python-update",
+    commands = [
+        ":requirements.update",
+        ":gazelle_python_manifest.update",
+    ],
+    jobs = 1,
+)
+
+multirun(
+    name = "gazelle",
+    commands = [
+        "_gazelle",
+        "buildifier.check",
+    ],
+    jobs = 1,
 )
 
 compile_pip_requirements(
@@ -87,4 +106,9 @@ gazelle_python_manifest(
     modules_mapping = ":modules_map",
     pip_repository_name = "pip",
     requirements = "//:requirements.txt",
+)
+
+alias(
+    name = "get_master_token",
+    actual = "//scripts:get_master_token",
 )

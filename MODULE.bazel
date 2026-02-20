@@ -8,20 +8,22 @@ bazel_dep(name = "rules_multitool", version = "1.11.1")
 bazel_dep(name = "bazel_env.bzl", version = "0.7.1")
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.1.2")
 bazel_dep(name = "gazelle", version = "0.47.0")
-
+bazel_dep(name = "rules_multirun", version = "0.13.0")
 bazel_dep(name = "rules_nodejs", version = "6.7.3")
+
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
 node.toolchain(node_version = "24.13.0")
 use_repo(node, "nodejs_toolchains")
 
 bazel_dep(name = "aspect_rules_js", version = "3.0.0-rc4")
+
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
 npm.npm_translate_lock(
     name = "npm",
+    lifecycle_hooks = {"*": ["postinstall"]},
     npmrc = "//:.npmrc",
     pnpm_lock = "//:pnpm-lock.yaml",
     verify_node_modules_ignored = "//:.bazelignore",
-    lifecycle_hooks = { "*": ["postinstall"] }
 )
 use_repo(npm, "npm")
 

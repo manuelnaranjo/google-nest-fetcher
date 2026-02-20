@@ -1,0 +1,11 @@
+load("@aspect_rules_py//py:defs.bzl", "py_binary")
+
+# gazelle:python_generation_mode file
+# gazelle:python_binary_naming_convention $package_name$
+
+py_binary(
+    name = "get_master_token",
+    srcs = ["get_master_token.py"],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//gpsoauth"],
+)

@@ -2,3 +2,4 @@ bazel-*
 node_modules
 bazel_env.lock
 .#*
+.env
