@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/theoremlp/rules_multitool/main/lockfile.schema.json",
+  "gazelle": {
+    "binaries": [
+      {
+        "kind": "file",
+        "url": "https://github.com/aspect-build/aspect-gazelle/releases/download/2025.40.171+aa8a243c/gazelle-linux_arm64_cgo",
+        "sha256": "70e2cb94f69bfa18aa4c2ac976357f9288ee77f943ddde1def5d4a4c263f12c3",
+        "os": "linux",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "file",
+        "url": "https://github.com/aspect-build/aspect-gazelle/releases/download/2025.40.171+aa8a243c/gazelle-linux_amd64_cgo",
+        "sha256": "79244d1778773367295062dfbb02b7ddbb5691717144b8113476dc6ffbf14288",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "file",
+        "url": "https://github.com/aspect-build/aspect-gazelle/releases/download/2025.40.171+aa8a243c/gazelle-darwin_arm64_cgo",
+        "sha256": "ac95ffcac848c8d6f9e0f498b206e06010cc7e01f064f974efcbf518e2110ee5",
+        "os": "macos",
+        "cpu": "arm64"
+      }
+    ]
+  },
+  "multitool": {
+    "binaries": [
+      {
+        "kind": "archive",
+        "url": "https://github.com/theoremlp/multitool/releases/download/v0.9.0/multitool-aarch64-unknown-linux-gnu.tar.xz",
+        "file": "multitool-aarch64-unknown-linux-gnu/multitool",
+        "sha256": "693b66def2d8dacdfcb5a011b7c32a8e89a13bdc031db8dc40c0759a38253103",
+        "os": "linux",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/theoremlp/multitool/releases/download/v0.9.0/multitool-x86_64-unknown-linux-gnu.tar.xz",
+        "file": "multitool-x86_64-unknown-linux-gnu/multitool",
+        "sha256": "34dc5968dad458a4050ebde58e484ebb7c624a119e4031347683eeb80922e6df",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/theoremlp/multitool/releases/download/v0.9.0/multitool-aarch64-apple-darwin.tar.xz",
+        "file": "multitool-aarch64-apple-darwin/multitool",
+        "sha256": "8f5e0cd033b0fcc128c762f8d527110433523da378619cecf40e91c1df5c0686",
+        "os": "macos",
+        "cpu": "arm64"
+      }
+    ]
+  }
+}

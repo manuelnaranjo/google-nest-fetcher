@@ -1,0 +1,90 @@
+load("@bazel_env.bzl", "bazel_env")
+load("@buildifier_prebuilt//:rules.bzl", "buildifier")
+load("@multitool//:tools.bzl", MULTITOOL_TOOLS = "TOOLS")
+load("@npm//:@google/gemini-cli/package_json.bzl", gemini_bin = "bin")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@pip//:requirements.bzl", "all_whl_requirements")
+load("@rules_python//python/pip_install:requirements.bzl", "compile_pip_requirements")
+load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
+load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
+
+# gazelle:map_kind py_library py_library @aspect_rules_py//py:defs.bzl
+# gazelle:map_kind py_binary py_binary @aspect_rules_py//py:defs.bzl
+# gazelle:map_kind py_test py_test @aspect_rules_py//py:defs.bzl
+
+load("@gazelle//:def.bzl", "gazelle")
+
+npm_link_all_packages(name = "node_modules")
+
+gemini_bin.gemini_binary(
+    name = "gemini",
+)
+
+bazel_env(
+    name = "bazel_env",
+    toolchains = {
+        "python": "@rules_python//python:current_py_toolchain",
+        "nodejs": "@nodejs_toolchains//:resolved_toolchain",
+    },
+    tools = {
+        "buildifier": "@buildifier_prebuilt//:buildifier",
+        "node": "$(NODE_PATH)",
+        "npm": "$(NPM_PATH)",
+        "python": "$(PYTHON3)",
+        "gemini": ":gemini",
+    } | MULTITOOL_TOOLS,
+    watch_files = {
+        "_common": [
+            "MODULE.bazel",
+            "BUILD.bazel",
+        ],
+    },
+)
+
+buildifier(
+    name = "buildifier.check",
+    exclude_patterns = [
+        "./.git/*",
+    ],
+    lint_mode = "warn",
+    mode = "fix",
+)
+
+gazelle(
+    name = "gazelle",
+    gazelle = "@multitool//tools/gazelle",
+)
+
+compile_pip_requirements(
+    name = "requirements",
+    extra_args = ["--allow-unsafe"],
+    requirements_in = "requirements.in",
+    requirements_txt = "requirements.txt",
+)
+
+# This repository rule fetches the metadata for python packages we
+# depend on. That data is required for the gazelle_python_manifest
+# rule to update our manifest file.
+# To see what this rule does, try `bazel run @modules_map//:print`
+modules_mapping(
+    name = "modules_map",
+    exclude_patterns = [
+        "^_|(\\._)+",  # This is the default.
+        "(\\.tests)+",  # Add a custom one to get rid of the psutil tests.
+    ],
+    wheels = all_whl_requirements,
+)
+
+# Gazelle python extension needs a manifest file mapping from
+# an import to the installed package that provides it.
+# This macro produces two targets:
+# - //:gazelle_python_manifest.update can be used with `bazel run`
+#   to recalculate the manifest
+# - //:gazelle_python_manifest.test is a test target ensuring that
+#   the manifest doesn't need to be updated
+gazelle_python_manifest(
+    name = "gazelle_python_manifest",
+    modules_mapping = ":modules_map",
+    pip_repository_name = "pip",
+    requirements = "//:requirements.txt",
+)

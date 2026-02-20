@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "@google/gemini-cli": "^0.28.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@google/gemini-cli"
+    ]
+  }
+}
