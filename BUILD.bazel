@@ -117,3 +117,8 @@ alias(
     name = "list_cameras",
     actual = "//scripts:list_cameras",
 )
+
+alias(
+    name = "retrieve_camera_footage",
+    actual = "//scripts:retrieve_camera_footage",
+)

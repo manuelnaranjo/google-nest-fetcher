@@ -12,7 +12,7 @@ FOYER_URL = (
     "/$rpc/google.internal.home.foyer.v1.CameraService/GetHistoricalPlaybackUrl"
 )
 NEST_SCOPE = "oauth2:https://www.googleapis.com/auth/nest-account"
-SEGMENT_MINUTES = 5
+SEGMENT_MINUTES = 20 # experimental, the app and web allows for 5 minutes
 
 
 def load_env(path):
