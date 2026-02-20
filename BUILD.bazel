@@ -112,3 +112,8 @@ alias(
     name = "get_master_token",
     actual = "//scripts:get_master_token",
 )
+
+alias(
+    name = "list_cameras",
+    actual = "//scripts:list_cameras",
+)

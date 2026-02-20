@@ -9,3 +9,21 @@ py_binary(
     visibility = ["//:__subpackages__"],
     deps = ["@pip//gpsoauth"],
 )
+
+py_binary(
+    name = "list_cameras",
+    srcs = ["list_cameras.py"],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//glocaltokens"],
+)
+
+py_binary(
+    name = "retrieve_camera_footage",
+    srcs = ["retrieve_camera_footage.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//glocaltokens",
+        "@pip//gpsoauth",
+        "@pip//requests",
+    ],
+)
