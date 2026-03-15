@@ -1,4 +1,4 @@
-load("@aspect_rules_py//py:defs.bzl", "py_binary")
+load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_library")
 
 # gazelle:python_generation_mode file
 # gazelle:python_binary_naming_convention $package_name$
@@ -23,7 +23,74 @@ py_binary(
     visibility = ["//:__subpackages__"],
     deps = [
         "@pip//glocaltokens",
-        "@pip//gpsoauth",
         "@pip//requests",
+    ],
+)
+
+py_binary(
+    name = "mouse_tracker",
+    srcs = ["mouse_tracker.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//numpy",
+        "@pip//opencv_python",
+    ],
+)
+
+py_binary(
+    name = "yolo",
+    srcs = ["yolo.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//lap",  # keep
+        "@pip//numpy",  # keep
+        "@pip//ultralytics",
+    ],
+)
+
+py_binary(
+    name = "mice_detector",
+    srcs = ["mice_detector.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//numpy",
+        "@pip//opencv_python",
+        "@pip//ultralytics",
+    ],
+)
+
+py_binary(
+    name = "train_mice",
+    srcs = ["train_mice.py"],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//ultralytics"],
+)
+
+py_binary(
+    name = "blob_motion",
+    srcs = ["blob_motion.py"],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//opencv_python"],
+)
+
+py_binary(
+    name = "concatenate_videos",
+    srcs = ["concatenate_videos.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_library(
+    name = "helpers",
+    srcs = ["helpers.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_binary(
+    name = "visualize_mice_paths",
+    srcs = ["visualize_mice_paths.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//numpy",
+        "@pip//opencv_python",
     ],
 )
